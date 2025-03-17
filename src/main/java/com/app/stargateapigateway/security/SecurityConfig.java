@@ -14,7 +14,7 @@ import org.springframework.security.web.server.authentication.AuthenticationWebF
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
-	@Value("${jwt.secret}")
+	@Value("${JWT_SECRET}")
 	private String jwtSecret;
 
 
@@ -39,6 +39,7 @@ public class SecurityConfig {
 	private AuthenticationWebFilter jwtAuthenticationFilter(ReactiveAuthenticationManager authenticationManager) {
 		AuthenticationWebFilter filter = new AuthenticationWebFilter(authenticationManager);
 		filter.setServerAuthenticationConverter(new JwtServerAuthenticationConverter());
+		filter.setAuthenticationFailureHandler(new JwtAuthenticationFailureHandler());
 		return filter;
 	}
 }

@@ -9,7 +9,7 @@ public class JwtAuthenticationToken implements Authentication {
 	private final String token;
 	private final String username;
 	private final Collection<? extends GrantedAuthority> authorities;
-	private boolean authenticated = false;
+	private boolean authenticated;
 
 	public JwtAuthenticationToken(String token) {
 		this(token, null, null);
@@ -19,7 +19,7 @@ public class JwtAuthenticationToken implements Authentication {
 		this.token = token;
 		this.username = username;
 		this.authorities = authorities;
-		this.authenticated = username != null;
+		this.authenticated = false;
 	}
 
 	@Override

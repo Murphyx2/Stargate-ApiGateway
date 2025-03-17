@@ -18,5 +18,4 @@ spring:
             - Path=/api/user/**
           filters:
             - StripPrefix=0
-jwt:
-  secret: j^pEzRHYX@TDzuiJ4asZ!gF9MxrQ3Gx*H@A!7MC!XKWAM8n6h*7Lvc$DyhWFSrAw5fzGrG4hSPPynZnd2DKLbP*zcxMb@JqwM#ttQ6Lphg*eaRtD$o*Zo!tLLVqpvUVG
+            - AddJwtClaimsToHeader

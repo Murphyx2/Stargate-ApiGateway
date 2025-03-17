@@ -7,14 +7,18 @@ import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParserBuilder;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import reactor.core.publisher.Mono;
 
 public class JwtReactiveAuthenticationManager implements ReactiveAuthenticationManager {
@@ -45,10 +49,17 @@ public class JwtReactiveAuthenticationManager implements ReactiveAuthenticationM
 					? roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
 					: List.of();
 
-			return Mono.just(new JwtAuthenticationToken(token, username, authorities));
+			JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(token, username, authorities);
+			authentication.setAuthenticated(true);
 
-		} catch (Exception e) {
-			return Mono.empty();
+			return Mono.just(jwtAuthenticationToken);
+		} catch (ExpiredJwtException e) {
+			return Mono.error(new BadCredentialsException("Token is expired"));
+		} catch (MalformedJwtException  | SignatureException e){
+			return Mono.error(new BadCredentialsException("Invalid token"));
+		} catch (Exception e){
+			return Mono.error(new BadCredentialsException("Token validation failed"));
 		}
+
 	}
 }
