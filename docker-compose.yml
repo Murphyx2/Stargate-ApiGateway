@@ -1,0 +1,13 @@
+services:
+  api-gateway:
+    build: .
+    ports:
+      - "7900:7900"
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
