@@ -5,17 +5,26 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: auth-service
-          uri: http://auth:8000
+          uri: lb://auth # Load-balanced URI via Eureka
           predicates:
             - Path=/api/auth/**
           filters:
             - StripPrefix=0
         - id: user-profile-service
-          uri: http://profile-service:8082
+          uri: lb://profile-service
           predicates:
             - Path=/api/user/**
           filters:
             - StripPrefix=0
             - AddJwtClaimsToHeader
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/

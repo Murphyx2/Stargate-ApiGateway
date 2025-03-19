@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import jakarta.annotation.PostConstruct;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class StargateApiGatewayApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(StargateApiGatewayApplication.class);
