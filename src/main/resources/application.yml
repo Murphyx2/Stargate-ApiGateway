@@ -23,6 +23,13 @@ spring:
           filters:
             - StripPrefix=0
             - AddJwtClaimsToHeader
+        - id: personal-finance
+          uri: lb://personal-finance
+          predicates:
+            - Path=/api/personal-finance/**
+          filters:
+            - StripPrefix=0
+            - AddJwtClaimsToHeader
 
 eureka:
   client:

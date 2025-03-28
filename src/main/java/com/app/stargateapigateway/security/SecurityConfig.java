@@ -17,7 +17,7 @@ public class SecurityConfig {
 	@Value("${JWT_SECRET}")
 	private String jwtSecret;
 
-
+	// TODO: Check if permitall should be there of if It can be removed.
 	@Bean
 	public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http, ReactiveAuthenticationManager authenticationManager) {
 		return http //
