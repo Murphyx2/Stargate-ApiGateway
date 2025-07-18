@@ -34,7 +34,7 @@ public class StargateApiGatewayApplication {
 	@PostConstruct
 	public void checkNetworkConnectivity() {
 		try {
-			InetAddress authAddr = InetAddress.getByName("auth");
+			InetAddress authAddr = InetAddress.getByName("auth-service");
 			logger.info("Resolved auth service: {}", authAddr.getHostAddress());
 		} catch (Exception e) {
 			logger.error("Failed to resolve auth service", e);
@@ -44,6 +44,12 @@ public class StargateApiGatewayApplication {
 			logger.info("Resolved profile-service: {}", profileAddr.getHostAddress());
 		} catch (Exception e) {
 			logger.error("Failed to resolve profile-service", e);
+		}
+		try {
+			InetAddress profileAddr = InetAddress.getByName("personal-finance");
+			logger.info("Resolved personal-finance: {}", profileAddr.getHostAddress());
+		} catch (Exception e) {
+			logger.error("Failed to resolve personal-finance", e);
 		}
 	}
 
